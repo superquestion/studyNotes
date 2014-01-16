@@ -1,0 +1,352 @@
+js 引擎是单线程运行的，浏览器无论什么时候都只有一个线程在运行js程序
+
+单线程的js引擎是怎么配合浏览器内核处理定时器和响应事件的？
+
+js的处理模式是 把所以的函数放到一个函数队列里面去，按照顺序执行
+
+
+
+
+AMD  提前执行 (异步模块定义)
+RequireJS会先尽早地执行(依赖)模块, 相当于所有的require都被提前了, 而且模块执行的顺序也不一定100%就是先mod1再mod2
+
+CMD  延迟执行 (通用模块定义) 
+SeaJS只会在真正需要使用(依赖)模块时才执行该模块
+SeaJS是异步加载模块的没错, 但执行模块的顺序也是严格按照模块在代码中出现(require)的顺序
+
+
+block  阻塞  指 线程在执行中遇到磁盘读写或者网络通信(i/o操作)通常会耗费较长的时间
+ 这时操作系统会这个线程的cpu控制权，暂停执行，将资源让给其他线程，这种方式称为阻塞。
+ 当i/o操作完毕时，操作系统将这个线程的阻塞状态解除，恢复其对cpu的控制权，令其继续执行。
+
+异步I/O  当线程遇到I/O操作时，不会以阻塞的方式等到I/O操作的完成或数据的返回，而是将I/O请求发送给操作系统，继续
+执行下一条语句，当系统完成I/O操作时，以事件的模式通知执行I/O的线程，线程会在特定的时候执行这个事件
+
+undefined NaN null 0 '' is false;
+
+如果第一个参数传入的对象调用者是null或者undefined的话，call方法将把全局对象（也就是window）作为this的值。
+
+//javascript 工厂模式
+function createPerson(name,age,job){
+   var o = new Object();
+   o.name = name;
+   o.age = age;
+   o.job = job;
+   o.sayName = function(){
+		console.log(this.name)
+   }
+	return o;
+}
+//这种工厂模式不能识别对象
+
+//构造函数模式
+
+function Person(name,age,job){
+ this.name = name;
+ this.age = age;
+ this.job = job;
+ this.sayName = function(){
+	console.log(this.name);
+ }
+}
+// 没有显式的创建对象
+//直接将属性和方法付给了this对象
+//没有return 
+// 当作构造函数使用
+var p = new Person('n','21','sofrware engineer');
+
+//作为普通函数调用
+Preson('c','27','doctor') //添加到了window
+window.sayName();//c
+
+//在另外一个对象的作用域中调用
+var o = new Object();
+Person.call(o,'k',25,'nurse')
+o.sayName();
+// preson 对象o的作用域中调用，因此o拥有了所有的属性和sayName()方法
+
+
+构造函数的问题
+ 实例化person1,person2两个对象，这两个对象都有sayName方法，但是这两个方法
+ 不是同一个Function 实例，因为函数也是对象，因此每定义一个函数，也就是实例
+ 化了一个对象
+ this.sayName = function(){} ===  this.sayName = new Function()
+ 创建两个完成同样任务的Function没必要
+ 
+ 可以通过把函数转到构造函数外部解决这个问题
+ function Person(name){
+   this.name = name;
+   this.sayName = sayName;
+ }
+ function sayName (){
+  console.log(this.name);
+ }
+ //这样sayName包含的是一个指向函数的指针
+ //这种方法解决了两个函数做同一件事的问题
+ 在全局定义的函数实际只能被某个对象调用，如果对象需要定义很多方法
+ 那么就要定义很多全局函数，自定义的引用类型就没有了封装性
+ 
+原型模式
+
+创建的每个函数都有一个prototype 属性，是一个指针，指向一个对象，包含可以由特定类型所有实例共享的属性和
+方法
+
+好处：所有对象实例共享它包含的属性和方法。
+问题： 一个实例修改同时会导致另外一个实例的修改。
+
+
+继承：
+原型链继承 
+
+问题:  一个实例修改同时会导致另外一个实例的修改。
+
+寄生组合式继承，通过构造函数继承属性，通过原型链继承方法。
+
+function inheritPrototype(subType, superType){
+     var prototype = object(superType.prototype);
+	 prototype.constructor = subType;
+	 subType.prototype = prototype;
+}
+
+
+闭包
+闭包是指有权访问函数作用域中的变量的函数，就是在函数内部创建另一个函数
+
+
+
+
+
+DOM:
+
+
+
+outerHTML
+
+
+div.outerHTML = "<p>this is test</p>";
+
+这段代码等同于
+var p = document.createElement("p")
+p.appendChild(document.createTextNode("this is test"));
+div.parentNode.replaceChild(p,div);
+结果是创建的p 元素会取代dom树中的div元素。  
+
+
+
+访问元素样式
+var myDiv = document.getElementById("myDiv")
+myDiv.style.backgroundColor = 'red';
+
+cssText 是为元素应用多项变化最快捷的方式
+myDiv.style.cssText ="width:25px;height:80px"
+
+移除某个css属性
+myDiv.style.removeProperty("width")
+
+获得某个元素的css属性值
+function getStyle(id,name){
+        var elem = document.getElementById(id);
+		//如果该属性存在于style[]中
+        if (elem.style[name]){
+        	return elem.style[name];
+        } 
+		//否则，尝试IE的方式      
+        else if (elem.currentStyle){
+        	return elem.currentStyle[name];
+        }
+        //或者W3C的方法
+        else if (document.defaultView && document.defaultView.getComputedStyle){
+        //格式化mame名称
+            name = name.replace(/([A-Z])/g,"-$1");
+		    name = name.toLowerCase();
+            //获取style对象并取得属性的值(如果存在的话)
+            var s = document.defaultView.getComputedStyle(elem,"");
+            return s && s.getPropertyValue(name);
+            //否则，就是在使用其它的浏览器
+        } else{
+			return null;
+		}   
+}
+
+
+
+事件
+
+冒泡 事件开始时由具体的元素（文档中嵌套层最深的那个节点接收）
+然后逐级向上传播到较为具体的节点（文档）
+ie5 冒泡到html (body直接到document)
+ie9,firefox chrome 将事件一直冒泡到window对象
+
+捕获
+事件由不太具体的节点接收到事件，最具体的节点最后接收到事件，事件捕获的用意
+在于事件到达预定目标之前捕获它
+
+事件包括三个阶段
+ 事件的捕获阶段
+ 处于目标阶段
+ 冒泡阶段
+ 
+ 添加处理事件： addEventListener(name,fn,boolean);
+ 1.要处理的事件名
+ 2.事件处理程序的函数
+ 3，布尔值，true 表示在事件捕获阶段执行，false 表示在事件冒泡阶段调用
+ 事件执行程序。
+ 删除        ： removeEventListener();
+
+ 
+ document.hasFocus() ;
+ document,activeElements属性
+ 
+ 
+ click  在用户单击鼠标左键或者按下回车时触发
+ dbclick 用户双击鼠标左键
+ mousedown 在用户按下任意鼠标按钮时触发
+ mouseenter 鼠标光标从元素外部首次移动到元素范围之内触发，不冒泡
+ mouseleave 元素上方的鼠标光标移动到元素范围之外时触发
+ mousemove 鼠标指针在元素内部移动时重复的触发
+ mouseout 在鼠标指针位于一个元素的上方,然后用户移动到另一个元素时触发
+ mouseover 鼠标指针位于一个元素外部，然后用户将其首次移入另一个元素边界
+ 之内时触发
+ mouseup 用户释放鼠标按钮时触发。
+ 
+ 
+ clientX 鼠标在浏览器视口中的特定位置
+ 
+ pageX  鼠标在视口中的位置  ie8 以下不支持
+ 
+ pageX =  clientX + document.docymentElement.scrollLeft;
+ 
+ screenX 在屏幕中的位置
+ 
+ offsetX 光标相对目标元素边界的 x坐标
+ 
+ 
+ keydown  用户按下键盘上的任意键时触发
+ keypress 用户按下键盘字符时触发
+ keyup  用户释放键盘上的键时触发
+ 
+ textInput (dom3)
+ 
+ removeChild() replaceChild() 
+ 从dom中删除节点，首先会触发DOMNodeRemoved事件
+ 这个事件的目标event.target是被删除的节点
+ event.relatedNode属性中包含对父节点的引用
+ 这个事件触发时，节点尚未从其父节点删除，因此其
+ parentNode属性和event,relatedNode 相同
+ 
+ 紧随其后触发的是DOMSubtreeModified事件
+ 事件的目标是被移除节点的父节点
+ 
+ appendChild(), replaceChild()
+ insertBefore() 向dom中插入节点
+ 
+ contextmenu事件是一个鼠标事件,用来表示何时
+ 应该显示上下问菜单，方便开发人员取消默认的
+ 上下文菜单而提供自定义菜单
+ contextmenu事件是冒泡的，所以首先要清除默认
+ 行为
+ 
+ hashchange事件
+ 当url的参数列表（#号后面的字符串发生变化时触发）
+ 
+ orientationchange 事件
+ 移动设备的横向查看模式切换成纵向查看模式时触发
+ 
+ 
+ 
+ 
+ 
+跨文档消息传递
+postMessage()方法接收两个参数
+一个是消息和一个消息接收方来自哪里
+
+var inframeWindow = document.getElementById('myframe').contentWindow;
+iframeWindow.postMessage('hello','www.xxx.com')
+
+接收到xdm消息时 会触发window对象的message事件
+触发message事件后，传递给onmessage处理程序的事件对象
+包含以下三个方面的重要消息：
+data: 作为postMessage（）第一个参数传入的字符串数据
+origin: 发送消息的文档所在的域
+source:发送消息的文档window对象代理，这个代理对象主要用于在发送上
+一条消息的窗口中调用postMessage()方法，如果发送消息的窗口来自
+同一个域，那么对象就是window
+
+event.source.postMessage(‘收到’，'xxx.com')
+
+ 
+ 
+ 
+ 
+ 打开ie错误提示
+ tools internet options（internet选项）---》高级---》显示脚本错误
+ 
+ 
+ JSON 
+ stringify() 把一个javascript对象序列化为一个json字符串
+ parse() 把json字符串转换成一个javascript对象
+ 
+ 
+ xmlHttpRequset ----->Microsoft.XMLHTTP
+ 
+ GET 请求需要encodeURIComponment();
+ 
+ FormData()对象
+ var data = new FormData();
+ data.append("name",'xx')
+ 
+ 这样可以添加任意多个键值对儿
+ 
+ xhr.timeout = 1000 //超时设置 ie8+
+ 
+ xhr.ontimeout = function(){}
+ 
+ progress
+ 
+ loadstart 在接收到响应数据的第一个字节时触发
+ progress 在接收响应期间持续不断地触发
+ error 在请求发生错误时触发
+ load 在接收到完整的响应数据时触发
+ loadend 通信完成
+ 
+ 必须在open之前调用progress事件
+ 
+ 
+ web worker
+ 
+ javascript单线程环境，无法同时运行多个脚本
+ 
+ web worker为javascript引入了线程技术
+ 
+ web worker在独立的线程运行  它执行的代码需要保存早一个
+ 单独的文件中
+ 
+ var worker = new Worker('task.js')
+ 在完成下载并执行文件时，系统生成worker
+ 
+ 
+ 创建Worker后  postMessage()方法启动
+ 
+ worker.postMessage()
+ 
+ 
+ var worker = new Worker('doWork.js')
+ worker.addEventListener('message',function(e){
+  console.log(e.data)
+ },false)
+ 
+ worker.postMessage('hi');
+ 
+ 
+ doWorker.js
+ 
+ self.addEventListener('message', function(e){
+    self.postMessage(e.data);
+ },false)
+ 
+ 
+ 
+ 
+ 
+ 
+ 
