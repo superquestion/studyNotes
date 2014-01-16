@@ -1,0 +1,9 @@
+新建一个文件目录
+鼠标右键 git Branch
+clone git://...../.git rrest
+新建  README.md
+git init
+git add README.md
+git commit -m "first commit"
+git remote add origin https://github.com/superquestion/studyNotes.git
+git push -u origin master
