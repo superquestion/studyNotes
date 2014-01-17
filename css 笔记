@@ -1,0 +1,42 @@
+clear :left  当前元素的左边不能有浮动
+      :right 当前元素的右边不能有浮动
+      :both  当前元素的左右边都不能有浮动
+
+width  最外层的100% auto  是相对视窗的 相对父元素 relative 下面的 absolute(相同) auto 相对于父元素的100%
+height 最外层100% auto  height 为0 或者为子元素的height,  相对的是父元素   relative 下面的 absolute(相同)
+
+auto 下面的 auto 的width 继承父元素, height 为0 或者为子元素的height
+
+
+maxWidth  于复制相等
+maxHeight 0 或者子元素的高度
+
+minHeight 于值相等  不继承
+
+
+vertical-align:middle 只能在display:inline-block的时候起作用
+
+属性的继承
+ 会继承 font-family font-size font-style
+   font-variant font-weight font letter-spacing
+   line-height text-align text-indent text-transform
+   word-spacing
+   
+=====================================================================
+
+static： 对象遵循常规流。top，right，bottom，left等属性不会被应用。
+relative 对象遵循常规流。top，right，bottom，left等属性被应用,相当margin
+如果父元素relative 子元素relative
+absolute :对象脱离常规流，使用top，right，bottom，left
+fixed：
+对象脱离常规流，使用top，right，bottom，left等属性以窗口为参考点进行定位，当出现滚动条时，对象不会随着滚动。IE6及以下不支持此参数值
+center：
+对象脱离常规流，使用top，right，bottom，left等属性指定盒子的位置或尺寸大小。盒子在其包含容器垂直水平居中。
+盒子的位置计算参照absolute   
+
+
+======================================================================
+display :inline 会把一个块元素转换成行元素 无法定义width,height
+        :inline-block  块元素之间不会换行
+
+   
