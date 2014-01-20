@@ -1,5 +1,4 @@
 Object::jsonEquals = (x) ->
-  #we do this because two objects may have the same data fields and data but different prototypes
   x1 = JSON.parse(JSON.stringify(this))
   x2 = JSON.parse(JSON.stringify(x))
 
