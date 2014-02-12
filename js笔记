@@ -22,6 +22,10 @@ block  阻塞  指 线程在执行中遇到磁盘读写或者网络通信(i/o操
 异步I/O  当线程遇到I/O操作时，不会以阻塞的方式等到I/O操作的完成或数据的返回，而是将I/O请求发送给操作系统，继续
 执行下一条语句，当系统完成I/O操作时，以事件的模式通知执行I/O的线程，线程会在特定的时候执行这个事件
 
+内存泄漏：
+在一个进程中，如果某一块内存无法访问，而且直到进程结束为止
+都无法释放，那么就发生了
+
 undefined NaN null 0 '' is false;
 
 如果第一个参数传入的对象调用者是null或者undefined的话，call方法将把全局对象（也就是window）作为this的值。
@@ -68,8 +72,7 @@ o.sayName();
 
 构造函数的问题
  实例化person1,person2两个对象，这两个对象都有sayName方法，但是这两个方法
- 不是同一个Function 实例，因为函数也是对象，因此每定义一个函数，也就是实例
- 化了一个对象
+ 不是同一个Function实例，因为js中函数也是对象，因此每定义一个函数，也就是实例化了一个对象
  this.sayName = function(){} ===  this.sayName = new Function()
  创建两个完成同样任务的Function没必要
  
@@ -94,6 +97,19 @@ o.sayName();
 好处：所有对象实例共享它包含的属性和方法。
 问题： 一个实例修改同时会导致另外一个实例的修改。
 
+
+原型对象
+
+只要创建一个新函数，就会根据一组特定的规则为函数创建一个prototype 属性，这个属性指向函数的原型对象，在默认的情况下，所有的原型对象都会自动的获得一个construct属性，这个属性包含一个指向prototype属性所在的函数指针，preson.prototype.construct 指向 preson,通过构造函数，可以为原型对象添加属性和方法
+
+-148
+创建自定义的函数构造之后，原型对象默认只会取得construct属性，其他方法都是从Object继承的，当调用构造函数创建一个新实例后，该实例内部将包含一个指针,指向构造对象的原型[[prototype]]，存在实例与构造函数的原型对象之间。
+
+pseron1 是Preson的实例
+person1的[[prototype]] 指向 构造函数的Preson的protoype
+构造函数的Preson的protoype 包含construct .....+属性
+erson1的[[prototype]] 指向 构造函数的Preson的protoype
+构造函数的Preson的protoype 的construct指向Person的prototype
 
 继承：
 原型链继承 
@@ -168,7 +184,11 @@ function getStyle(id,name){
 		}   
 }
 
-
+IE对盒模型的渲染在 Standards Mode和Quirks Mode是有很大差别的，在Standards Mode下对于盒模型的解释和其他的标准浏览器是一样，但在Quirks Mode模式下则有很大差别，而在不声明Doctype的情况下，IE默认又是Quirks Mode。所以为兼容性考虑，我们可能需要获取当前的文档渲染方式。
+document.compatMode正好派上用场，它有两种可能的返回值：BackCompat和CSS1Compat。
+BackCompat：标准兼容模式关闭。浏览器客户区宽度是document.body.clientWidth；CSS1Compat：标准兼容模式开启。 
+浏览器客户区宽度是document.documentElement.clientWidth。
+(document.compatMode && document.compatMode!="CSS1Compat")? document.body.scrollTop:document.documentElement.scrollTop||window.pageYOffset;
 
 事件
 
@@ -214,7 +234,7 @@ ie9,firefox chrome 将事件一直冒泡到window对象
  
  pageX  鼠标在视口中的位置  ie8 以下不支持
  
- pageX =  clientX + document.docymentElement.scrollLeft;
+ pageX =  clientX + document.documentElement.scrollLeft;  ||  document.body.scrollLeft
  
  screenX 在屏幕中的位置
  
@@ -345,8 +365,55 @@ event.source.postMessage(‘收到’，'xxx.com')
  },false)
  
  
- 
- 
- 
- 
+ 获得页面中中的sheet -------page(319)
+  var sheet = document.styleSheets[0];
+  var rules = sheet.cssRules || sheet.rules;
+  console.log(rules)
+  var rule = rules[1];
+  console.log(rule.selectorText);
+  console.log(rule.style.cssText)
+  修改
+  rule.style.color = 'red';
+  插入
+  sheet.insertRule("body{background-color:red}",0)
+  ie8 之前是 addRule
+  删除
+  deleteRule(index)  
+  ie removeRule(index)
+
+
+
+  获取绝对位置的横坐标和纵坐标。
+　　function getElementLeft(element){
+　　　　var actualLeft = element.offsetLeft;
+　　　　var current = element.offsetParent;
+　　　　while (current !== null){
+　　　　　　actualLeft += current.offsetLeft;
+　　　　　　current = current.offsetParent;
+　　　　}
+　　　　return actualLeft;
+　　}
+　　function getElementTop(element){
+　　　　var actualTop = element.offsetTop;
+　　　　var current = element.offsetParent;
+　　　　while (current !== null){
+　　　　　　actualTop += current.offsetTop;
+　　　　　　current = current.offsetParent;
+　　　　}
+　　　　return actualTop;
+　　}
+
+获得元素大小
+var cssX=function(elem){  
+    if(elem.style.width)return elem.style.width;  
+    if(elem.currentStyle)return elem.currentStyle.width;   
+    if(document.defaultView && document.defaultView.getComputedStyle)  
+     return document.defaultView.getComputedStyle(elem,"").getPropertyValue("width");   
+}
+var cssY=function(elem){  
+    if(elem.style.height)return elem.style.height;  
+    if(elem.currentStyle)return elem.currentStyle.height;   
+    if(document.defaultView && document.defaultView.getComputedStyle)  
+     return document.defaultView.getComputedStyle(elem,"").getPropertyValue("height");   
+}
  
