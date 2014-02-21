@@ -381,39 +381,63 @@ event.source.postMessage(‘收到’，'xxx.com')
   deleteRule(index)  
   ie removeRule(index)
 
-
-
-  获取绝对位置的横坐标和纵坐标。
-　　function getElementLeft(element){
-　　　　var actualLeft = element.offsetLeft;
-　　　　var current = element.offsetParent;
-　　　　while (current !== null){
-　　　　　　actualLeft += current.offsetLeft;
-　　　　　　current = current.offsetParent;
-　　　　}
-　　　　return actualLeft;
-　　}
-　　function getElementTop(element){
-　　　　var actualTop = element.offsetTop;
-　　　　var current = element.offsetParent;
-　　　　while (current !== null){
-　　　　　　actualTop += current.offsetTop;
-　　　　　　current = current.offsetParent;
-　　　　}
-　　　　return actualTop;
-　　}
-
 获得元素大小
-var cssX=function(elem){  
-    if(elem.style.width)return elem.style.width;  
-    if(elem.currentStyle)return elem.currentStyle.width;   
-    if(document.defaultView && document.defaultView.getComputedStyle)  
-     return document.defaultView.getComputedStyle(elem,"").getPropertyValue("width");   
-}
-var cssY=function(elem){  
-    if(elem.style.height)return elem.style.height;  
-    if(elem.currentStyle)return elem.currentStyle.height;   
-    if(document.defaultView && document.defaultView.getComputedStyle)  
-     return document.defaultView.getComputedStyle(elem,"").getPropertyValue("height");   
-}
+function getWidth(el){
+     if(el.style.width){
+       return el.style.width;
+     }
+     if(el.currentStyle){
+       return el.currentStyle.width;
+     }
+     if(document.defaultView && document.defaultView.getComputedStyle){
+       return document.defaultView.getComputedStyle(el, null).getPropertyValue('width');
+     }
+   }
  
+1. 位置---->（偏移量）---> 321
+
+元素的可见大小由其高度，宽度决定，包括所有内边距，滚动条，边框（不包括外边距）
+
+offsetHeight: 元素在垂直方向上的空间大小。包括元素的高度（可见的水平滚动高度，上下边框高度）
+offsetWidth: 元素在水平方向上的空间大小。包括元素的宽度（可见的垂直滚动高度，左右边框高度）
+
+offsetLeft:  元素左外边框到包含元素（父）左边框之间的距离
+offsetLeft:  元素上外边框到包含元素（父）上边框之间的距离
+
+获取绝对位置的横坐标和纵坐标:
+function getXY(el){
+    return document.documentElement.getBoundingClientRect() && (function(){
+       var pos = el.getBoundingClientRect();
+       return {x: pos.left + document.documentElement.scrollLeft, y : pos.top + document.documentElement.scrollTop}
+    })() || (function(){
+      var _x = 0, _y = 0;
+      do{
+        _x+= el.offsetLeft;
+        _y+= el.offsetTop;
+
+      }while(el = el.offsetParent)
+
+      return {x : _x, y: _y};
+    })()
+  };
+ 
+  客户区大小：
+  元素的客户区大小，指的是元素的内容及其内边距所占据的空间大小
+  在确定文档的总高度事，必须取得scrollWidth/clientWidth中的最大值
+  scrollWidth 指在没有横向滚动条的 页面的最大宽度
+  
+  function getViewPort(){
+     if(document.compatMode == 'BackCompat'){
+       return{
+         width: Math.max(document.body.clientWidth, document.body.scrollWidth),
+         height:Math.max(document.body.clientHeight, document.body.scrollHeight)
+       }
+     }else{
+       return {
+         width: Math.max(document.documentElement.clientWidth, document.documentElement.scrollWidth),
+         height: Math.max (document.documentElement.clientHeight, document.documentElement.scrollHeight)
+       }
+     }
+   }
+
+
