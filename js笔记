@@ -365,6 +365,19 @@ event.source.postMessage(‘收到’，'xxx.com')
  },false)
  
  
+ sessionStorage与 localStorage 的异同
+ sessionStorage 和 localStorage 就一个不同的地方， 
+ sessionStorage数据的存储仅特定于某个会话中，也就是说数据只保持到浏览器关闭， 
+ 当浏览器关闭后重新打开这个页面时，之前的存储已经被清除。
+ 而 localStorage 是一个持久化的存储，它并不局限于会话。
+ 
+ 与Cookie相比，Web Storage存在不少的优势，概括为以下几点：
+ 1. 存储空间更大：IE8下每个独立的存储空间为10M，其他浏览器实现略有不同，但都比Cookie要大很多。
+ 2. 存储内容不会发送到服务器：当设置了Cookie后，Cookie的内容会随着请求一并发送的服务器，
+   这对于本地存储的数据是一种带宽浪费。而Web Storage中的数据则仅仅是存在本地，不会与服务器发生任何交互。
+ 3. 更多丰富易用的接口：Web Storage提供了一套更为丰富的接口，使得数据操作更为简便。
+ 4. 独立的存储空间：每个域（包括子域）有独立的存储空间，各个存储空间是完全独立的，因此不会造成数据混乱。
+ 
  获得页面中中的sheet -------page(319)
   var sheet = document.styleSheets[0];
   var rules = sheet.cssRules || sheet.rules;
