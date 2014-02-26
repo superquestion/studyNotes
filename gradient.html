@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <link href="css/base.css" rel="stylesheet" type="text/css" >
+    <style>
+      .gradient{
+        height: 100px;
+        width: 210px;
+        background:-moz-linear-gradient(left,#ccc,#000);
+        background:-webkit-gradient(linear, left top, right bottom, from(#ccc), to(#000));
+        background:-webkit-linear-gradient(left,#ccc,#000);
+        background: -ms-linear-gradient(left, #ccc 0%, #000 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#CCCCCC", endColorstr="#000", gradientType=1 );
+       -ms-filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#CCCCCC", endColorstr="#000",gradientType=1);
+      }
+      .deg{
+        width: 100px;
+        height: 200px;
+        background: -moz-linear-gradient(90deg, #008000 , #0070ff);
+        background:-webkit-gradient(linear, 90deg, right bottom, from(#008000), to(#0070ff));
+        background:-webkit-linear-gradient(90deg,#008000,#0070ff);
+        background: -ms-linear-gradient(0deg, #008000, #0070ff);
+      }
+
+    </style>
+</head>
+<body>
+  <div class="gradient"></div>
+  <div class="deg"></div>
+</body>
+</html>
