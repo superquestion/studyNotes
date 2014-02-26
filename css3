@@ -1,0 +1,75 @@
+css3
+
+css linear-gradient(线性渐变)
+
+-moz-linear-gradient( [ [ <angle> | [top | bottom] || [left | right] ],]? <color-stop>[, <color-stop>]+);
+
+参数： 第一个参数表示线性渐变的方向，top是从上到下，left是从左到右
+left top 是从左下到右下， 第二个参数和第三个参数分别是起点的颜色和终点的颜色，也可以是多个颜色
+
+-webkit-gradient(<type>, <point> [, <radius>]?, <point> [, <radius>]? [, <stop>]*)
+
+eg: -webkit-gradient(linear,left top, left bottom, from(#ccc),to(#000))
+
+-webkit-linear-gradient(top,#ccc,#000)
+top 上下
+left  左右
+
+IE
+filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr="#1471da", endColorstr="#1C85FB");/*IE<9>*/
+-ms-filter: "progid:DXImageTransform.Microsoft.gradient (GradientType=0, startColorstr="#1471da", endColorstr="#1C85FB")";/*IE8+*/
+
+GradientType = 0 上下
+GradientType = 1 左右
+
+ie10
+-ms-linear-gradient([ [ <angle> | to <side-or-corner> ] , ] ? <color-stop> [ , <color-stop> 
+
+
+angle 接收一个deg值
+linear            ie10 中0deg 是top         
+     90
+      |
+      |
+180 ----- 0
+      |
+      |
+      270
+
+线性渐变是从线的一端过渡到另一端，与之相比，径向渐变则先开始于一点，然后呈圆形或椭圆形由内向外均匀地扩散开。指定径向渐变的方法是：先指定一个中心点，然后是最终的圆形或椭圆形的大小和形状—如果是椭圆形—或 100%，最后是中间的颜色停止点，都由逗号分隔。径向渐变的基本语法如下所示：
+
+radial-gradient([ [ <shape> || <size> ] [ at <position> ] ? , | at <position> , ] ? <color-stop> [ , <color-stop> ] +)
+
+<shape>
+可选值，用于指定渐变的结束形状。如果省略此值，则结束形状为圆形（如果 size 参数为单个长度值），否则为椭圆形。
+ellipse  指示渐变采用椭圆形状。
+circle  指示渐变采用圆形形状。
+
+<size>
+
+http://ie.microsoft.com/testdrive/Graphics/CSSGradientBackgroundMaker/Default.html
+
+
+透明度
+
+filter: alpha(opacity=80); 
+/* IE 8 */
+-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=80)"; 
+/* Everyone else */
+opacity: 0.8;
+
+text-shadow:
+horizontal offset  必需。如果是正值，则绘制偏移到文本右侧的阴影；如果是负值，则绘制偏移到文本左侧的阴影。
+vertical offset  必需。如果是正值，则绘制偏移到文本下方的阴影；如果是负值，则绘制偏移到文本上方的阴影。
+blur distance  不允许使用负值。如果模糊值为零，则阴影边缘是锐利的。否则，值越大，阴影边缘就越模糊。
+spread distance  如果是正值，则阴影形状以指定半径向各个方向扩展。如果是负值，则阴影会收缩。（注：可能不是所有浏览器都支持这个值。）
+color  任何受支持的级联样式表 (CSS) 颜色值。
+
+
+-moz-box-shadow: 投影方式 X轴偏移量 Y轴偏移量 阴影模糊半径 阴影扩展半径 阴影颜色;
+//Safari and Google chrome10.0-
+-webkit-box-shadow: 投影方式 X轴偏移量 Y轴偏移量 阴影模糊半径 阴影扩展半径 阴影颜色;
+//Firefox4.0+ 、 Google chrome 10.0+ 、 Oprea10.5+ and IE9
+box-shadow:  投影方式 X轴偏移量 Y轴偏移量 阴影模糊半径 阴影扩展半径 阴影颜色;
+
+ie filter: progid:DXImageTransform.Microsoft.Shadow(color=’颜色值’, Direction=阴影角度（数值）, Strength=阴影半径（数值）);
