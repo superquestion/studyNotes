@@ -1,0 +1,100 @@
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <style>
+    .rotate {
+      width: 200px;
+      height: 200px;
+      background: #0070ff;
+      transform: rotate(30deg);
+      -webkit-transform: rotate(30deg);
+    }
+
+    .translate {
+      width: 200px;
+      height: 200px;
+      background: #008000;
+      margin: 200px 0;
+      transform: translate(50px, 50px);
+      transform: scale(0.5, 0.5);
+      -webkit-transform: translate(50px, 50px);
+      -webkit-transform: scale(0.5, 0.5);
+
+    }
+
+    .decor-up {
+      border-color: #f6f6f6 #f6f6f6 #000 #f6f6f6;
+      border-style: solid;
+      border-width: 0px 12px 12px 12px;
+      display: inline-block;
+      -webkit-transition-duration: 0.8s;
+      -moz-transition-duration: 0.8s;
+      -o-transition-duration: 0.8s;
+      transition-duration: 0.8s;
+      -webkit-transition-property: -webkit-transform;
+      -moz-transition-property: -moz-transform;
+      -o-transition-property: -o-transform;
+      transition-property: transform;
+      overflow: hidden;
+
+    }
+
+    .decor-up:hover {
+      -webkit-transform: rotate(180deg);
+      -moz-transform: rotate(180deg);
+      -o-transform: rotate(180deg);
+    }
+
+    .decor-down {
+      border-color: #000 #fff #fff #fff;
+      border-style: solid;
+      border-width: 12px 12px 0 12px;
+      display: inline-block;
+    }
+
+    .decor-left {
+      border-color: #fff #000 #fff #fff;
+      border-style: solid;
+      border-width: 12px 12px 12px 0;
+      display: inline-block;
+    }
+
+    .decor-right {
+      border-color: #fff #fff #fff #000;
+      border-style: solid;
+      border-width: 12px 0 12px 12px;
+      display: inline-block;
+    }
+
+    .skew {
+      height: 100px;
+      width: 100px;
+      background: #239921;
+      transform: skew(30deg, 0deg);
+      -webkit-transform: skew(30deg, 0deg);
+    }
+
+    .matrix {
+      height: 100px;
+      width: 100px;
+      background: red;
+      -moz-transform: matrix(1, 1, -1, 0, 0, 0);
+      -webkit-transform: matrix(1, 1, -1, 0, 0, 0);
+      -o-transform: matrix(1, 1, -1, 0, 0, 0);
+      -ms-transform: matrix(1, 1, -1, 0, 0, 0);
+      transform: matrix(1, 1, -1, 0, 0, 0);
+    }
+
+  </style>
+</head>
+<body>
+<div class="rotate"></div>
+<div class="translate"></div>
+<div class="decor-up"></div>
+<div class="decor-down"></div>
+<div class="decor-left"></div>
+<div class="decor-right"></div>
+<div class="skew"></div>
+<div class="matrix"></div>
+</body>
+</html>
