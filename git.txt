@@ -7,3 +7,29 @@ git add README.md
 git commit -m "first commit"
 git remote add origin https://github.com/superquestion/studyNotes.git
 git push -u origin master
+
+生成公钥：
+https://help.github.com/articles/generating-ssh-keys
+
+创建分支 并切换到分支上
+git checkout -b feature_x
+
+删除 分支
+git branch -d feature_x
+
+合并
+1.先切换到要合并的分支
+2.git merge xx
+
+
+
+快捷设置
+C:\Users\Administrator  .gitconfig
+[alias]
+    ci = commit -s
+    lg = log --graph --pretty=format:'%Cred%h%Creset -%d%C(white) %s %C(yellow)(%cr) %C(white)%an' --abbrev-commit --date=relative -10
+    br = branch
+    st = status
+    co = checkout
+    go = "! bash -c \" git pull origin && git add . && git status && if [ \\\"$*\\\" == \\\"\\\" ]; then git commit -a; else git commit -am \\\"$*\\\"; fi && git push origin HEAD;\"" 
+    release = "! bash -c \" if [ \\\"$1\\\" == \\\"\\\" -o \\\"$2\\\" == \\\"\\\" ]; then echo \\\"git release <branch> <version> [<message>]\\\"; exit; fi;  git.exe pull -v --progress "origin"; git add .; git status; if [ \\\"$3\\\" == \\\"\\\" ]; then git commit -a; else git commit -am \\\"$3\\\"; fi; git checkout $1; git merge develop; git push --all; git tag -m \\\"$3\\\" $2 && git push --tags; git checkout develop; \"" 
