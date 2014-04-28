@@ -18,10 +18,13 @@
       .deg{
         width: 100px;
         height: 200px;
-        background: -moz-linear-gradient(90deg, #008000 , #0070ff);
-        background:-webkit-gradient(linear, 90deg, right bottom, from(#008000), to(#0070ff));
-        background:-webkit-linear-gradient(90deg,#008000,#0070ff);
-        background: -ms-linear-gradient(0deg, #008000, #0070ff);
+        background: -moz-linear-gradient(90deg, #ffffff , #0070ff);
+        background:-webkit-gradient(linear, 90deg, right bottom, from(#ffffff), to(#0070ff));
+        background:-webkit-linear-gradient(90deg,#ffffff,#0070ff);
+        background: -ms-linear-gradient(90deg, #ffffff, #0070ff);
+        filter: ap;
+        filter: progid:DXImageTransform.Microsoft.gradient(gradientType=0,startColorstr="#0070ff", endColorstr="#ffffff");
+       -ms-filter: "progid:DXImageTransform.Microsoft.gradient(gradientType=0,startColorstr='#0070ff', endColorstr='#ffffff')";
       }
 
     </style>
