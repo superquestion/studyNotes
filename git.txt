@@ -51,3 +51,93 @@ eg：
 指定过滤某个文件：
 /mtk/do.c
 /mtk/if.h
+
+
+
+$ git config --global user.name "xx"
+
+$ git config --global user.email "xx@xx.com"
+执行了上面的命令后,会在你的主目录(home directory)建立一个叫 ~/.gitconfig 的文件. 内容一般像下面这样:
+
+[user]
+        name = xx
+        email = xx@xx.com
+
+修改文件，将更新的内容添加到索引
+
+git add file1 file2 
+ 
+git add * //所有
+
+git diff 加上--cached参数。看到哪些文件将被提交
+
+git diff --cached
+
+(如果没有--cached参数，git diff 会显示当前你所有已做的但没有加入到索引里的修改.) 
+你也可以用git status命令来获得当前项
+
+git diff 和 git diff --cached的区别
+
+git diff 找到你当前工作目录中，没有添加到索引中的，没有执行git add的，下次commit不会
+被提交的。
+
+git diff --cached 如果
+
+git commit 提交到本地版本库
+
+git commit -m "注释"
+
+
+git add 命令 可以用git commit -a 代替
+
+创建一个叫做 feature_x 的分支，并切换到该分支
+git checkout -b feature_x 
+
+删除分支
+git branch -d feature_x
+
+切换到分支：
+git checkout xx
+
+合并其他分支到当前分支
+git merge xx(分知名) ---> git branch 获得所有的分支名
+
+如果两个分支出现冲突
+
+git diff (查看冲突)
+
+修改后  git commit -a
+
+
+撤销合并
+git reset --hard HEAD
+
+合并后并提交的代码 ，撤销
+
+git reset --hard ORIG_HEAD
+
+
+替换本地的改动
+
+git checkout -- fileName
+
+此命令会使用Head中的最新内容替换掉你工作目录中的文件。已经添加到
+缓存区的改动，以及新文件，都不会受到影响
+
+
+git rebase origin
+
+去掉你分支中每个commit ,保存在.git/rebase中，然后把你的分支跟新到最新的origin分支
+
+
+在rebase的过程中，也许会出现冲突(conflict). 在这种情况，Git会停止rebase并会让你去解决 冲突；在解决完冲突后，用"git-add"命令去更新这些内容的索引(index), 然后，你无需执行 git-commit,只要执行:
+
+$ git rebase --continue
+这样git会继续应用(apply)余下的补丁。
+
+在任何时候，你可以用--abort参数来终止rebase的行动，并且"mywork" 分支会回到rebase开始前的状态。
+
+$ git rebase --abort
+终止
+
+git grep 
