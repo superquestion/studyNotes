@@ -1,0 +1,128 @@
+clear :left  当前元素的左边不能有浮动
+      :right 当前元素的右边不能有浮动
+      :both  当前元素的左右边都不能有浮动
+
+width  最外层的100% auto  是相对视窗的 相对父元素 relative 下面的 absolute(相同) auto 相对于父元素的100%
+height 最外层100% auto  height 为0 或者为子元素的height,  相对的是父元素   relative 下面的 absolute(相同)
+
+auto 下面的 auto 的width 继承父元素, height 为0 或者为子元素的height
+
+
+maxWidth  于复制相等
+maxHeight 0 或者子元素的高度
+
+minHeight 于值相等  不继承
+
+
+vertical-align:middle 只能在display:inline-block的时候起作用
+
+属性的继承
+ 会继承 font-family font-size font-style
+   font-variant font-weight font letter-spacing
+   line-height text-align text-indent text-transform
+   word-spacing
+   
+=====================================================================
+
+static： 对象遵循常规流。top，right，bottom，left等属性不会被应用。
+relative 对象遵循常规流。top，right，bottom，left等属性被应用,相当margin
+如果父元素relative 子元素relative
+absolute :对象脱离常规流，使用top，right，bottom，left
+fixed：
+对象脱离常规流，使用top，right，bottom，left等属性以窗口为参考点进行定位，当出现滚动条时，对象不会随着滚动。IE6及以下不支持此参数值
+center：
+对象脱离常规流，使用top，right，bottom，left等属性指定盒子的位置或尺寸大小。盒子在其包含容器垂直水平居中。
+盒子的位置计算参照absolute   
+
+
+
+.clearfix:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+.clearfix{*+height:1%;}
+子元素因进行了浮动，而脱离了文档流，导致父元素的height为零。 
+
+css 选择器：
+a > b  a的子元素b
+a ~ b  a的兄弟元素b 
+:link
+:vistited
+:hover  ie8+ 支持任意元素
+:active 
+
+
+:checked 所有被选中的对象
+input[type="radio"]:cheked 单选按钮被选中的样式
+
+:disabled  
+input[type="text"]:disabled  ie9+支持
+
+：empty 
+ .box:empty 当元素class为box的内容为空的样式 ie9+支持
+
+ input:enabled  允许编辑时的样式  ie9+支持
+
+ ：first-child  一组元素中的第一个  如 span: first-child 
+ :  last-child  一组元素中的最后一个
+ ie7+支持
+
+ :first-of-type 第一个不同元素  ie9+
+  :last-of-type  最后一个不同元素
+  demo-url: https://developer.mozilla.org/en-US/docs/Web/CSS/:first-of-type
+
+  <element>:focus  焦点所在element div没有focus，要设置tableIndex 
+  ie8+ 支持
+
+  input:invalid 非法的 如 input type=ulr 输入了一个数字
+  :valid 合法的 
+  ：required 必须存在的   ie10+
+
+  ：lang(en)  element 属性为en
+  demo-url  https://developer.mozilla.org/en-US/docs/Web/CSS/:lang  ie8+
+
+  :not(select)
+  p:not(.clssy) p的class属性不是clssy的
+  ：not(p) 不是p标签  ie9+
+
+  : nth-child(2n+1) odd奇数行
+  ：nth-child(2n) even偶数行  ie9+
+  ：nth-child(2) 选择第几个标签
+  ：nth-child(n+4) 大于第四个（包含4）
+  ：nth-child(-n+4) 小于4 （包含4）
+  : nth-child(3n+1) 隔二取一
+  ：nth-last-child(3)选取倒数第3
+
+  ：after  元素后面添加内容  ie8+
+  :: after  ie9+
+
+  background-color: 指定填充的背景颜色
+  background-image: 引用图片作为背景
+  background-position: 指定背景图片位置
+  background-repeat: 背景图片是否重复 
+    * space: 应用同等数量的空白到图片之间，直到填满整个元素
+    * round: 缩小图片直到正好平铺满元素
+
+  background-attachment:图片是否随页面滚动 
+   local(背景滚动)
+   fixed：相对浏览器的，滚动的时候，一直固定
+   scoll: 当元素滚动时，元素背景也必需随着滚动，超出视口会消失
+
+    background-size: contain;
+  缩小图片来适应元素的尺寸(保持像素的长宽比)
+  * background-size: cover;
+  扩展图片来填满元素(保持像素的长宽比)
+  * background-size: 100px 100px;
+  调整图片到指定大小
+  * background-size: 50% 100%;
+  调整图片到指定大小。百分比是相对于包含元素的尺寸的。
+
+
+======================================================================
+display :inline 会把一个块元素转换成行元素 无法定义width,height
+        :inline-block  块元素之间不会换
+        table-cell 会被其他一些CSS属性破坏，例如float, position:absolute，
+        所以，在使用display:table-cell与float:left或是position:absolute属性尽量不用同用。
+        设置了display:table-cell的元素对宽度高度敏感，对margin值无反应，响应padding属性，
+        基本上就是活脱脱的一个td标签元素
+        
+        “display:table-row;”属性，浏览器会默认创建出一个表格行
+
+   

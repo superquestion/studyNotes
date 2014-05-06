@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+  <meta charset="utf-8">
+  <style>
+    #gun:hover ~ #star {
+      -webkit-animation: rotate 4s ease-in;
+      animation: rotate 4s ease-in;
+    }
+
+    @-webkit-keyframes rotate {
+      100% {
+        -webkit-transform: rotate(360deg);
+      }
+    }
+
+    @keyframes rotate {
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    @-webkit-keyframes buttonLight {
+      from {
+        background: #0070ff;
+        color: #fff;
+      }
+      50% {
+        background: #0000FF;
+        color: #ccc;
+      }
+      to {
+        background: #0d68dc;
+        color: #000;
+      }
+
+    }
+
+    a.btn {
+      background: #239921;
+      font-size: 16px;
+      padding: 10px 15px;
+      color: #fff;
+      text-align: center;
+      -webkit-animation-name: 'buttonLight';
+      -webkit-animation-duration: 5s;
+      -webkit-animation-delay: 10s;
+      -webkit-animation-iteration-count: infinite; /*循环无限次*/
+
+    }
+
+    .blue-ball {
+      background-color: rgba(0, 0, 0, 0);
+      border: 5px solid rgba(0, 183, 229, 0.9);
+      opacity: .9;
+      border-right: 5px solid rgba(0, 0, 0, 0);
+      border-left: 5px solid rgba(0, 0, 0, 0);
+      border-radius: 50px;
+      box-shadow: 0 0 35px #2187e7;
+      width: 50px;
+      height: 50px;
+      margin: 0 auto;
+      -moz-animation: spinPulse 1s infinite ease-in-out;
+      -webkit-animation: spinPulse 1s infinite linear;
+      animation: spinPulse 1s infinite ease-in-out
+    }
+
+    .blue-ball-2 {
+      background-color: rgba(0, 0, 0, 0);
+      border: 5px solid rgba(0, 183, 229, 0.9);
+      opacity: .9;
+      border-left: 5px solid rgba(0, 0, 0, 0);
+      border-right: 5px solid rgba(0, 0, 0, 0);
+      border-radius: 50px;
+      box-shadow: 0 0 15px #2187e7;
+      width: 30px;
+      height: 30px;
+      margin: 0 auto;
+      position: relative;
+      top: -50px;
+      -moz-animation: spinoffPulse 1s infinite linear;
+      -webkit-animation: spinoffPulse 1s infinite linear;
+      animation: spinoffPulse 1s infinite linear
+    }
+
+    @-moz-keyframes spinPulse {
+      0% {
+        -moz-transform: rotate(160deg);
+        opacity: 0;
+        box-shadow: 0 0 1px #2187e7
+      }
+      50% {
+        -moz-transform: rotate(145deg);
+        opacity: 1
+      }
+      100% {
+        -moz-transform: rotate(-320deg);
+        opacity: 0
+      }
+    }
+
+    @-moz-keyframes spinoffPulse {
+      0% {
+        -moz-transform: rotate(0deg)
+      }
+      100% {
+        -moz-transform: rotate(360deg)
+      }
+    }
+
+    @-webkit-keyframes spinPulse {
+      0% {
+        -webkit-transform: rotate(160deg);
+        opacity: 0;
+        box-shadow: 0 0 1px #2187e7
+      }
+      50% {
+        -webkit-transform: rotate(145deg);
+        opacity: 1
+      }
+      100% {
+        -webkit-transform: rotate(-320deg);
+        opacity: 0
+      }
+    }
+
+    @-webkit-keyframes spinoffPulse {
+      0% {
+        -webkit-transform: rotate(0deg)
+      }
+      100% {
+        -webkit-transform: rotate(360deg)
+      }
+    }
+
+    @keyframes spinPulse {
+      0% {
+        transform: rotate(160deg);
+        opacity: 0;
+        box-shadow: 0 0 1px #2187e7
+      }
+      50% {
+        transform: rotate(145deg);
+        opacity: 1
+      }
+      100% {
+        transform: rotate(-320deg);
+        opacity: 0
+      }
+    }
+
+    @keyframes spinoffPulse {
+      0% {
+        transform: rotate(0deg)
+      }
+      100% {
+        transform: rotate(360deg)
+      }
+    }
+
+    .blue-balls {
+      margin-top: -25px;
+      margin-left: -25px;
+      position: absolute;
+      z-index: 3000101;
+      top: 50%;
+      left: 50%
+    }
+
+    body > .blue-balls {
+      position: fixed
+    }
+
+
+  </style>
+</head>
+<body>
+<h1 id="gun">GUN</h1>
+
+<h1 id="star">STAR</h1>
+
+<a class="btn">发光的按钮</a>
+
+<div class="blue-balls">
+  <div class="blue-ball"></div>
+  <div class="blue-ball-2"></div>
+</div>
+</body>

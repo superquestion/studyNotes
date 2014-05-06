@@ -1,0 +1,48 @@
+function define(def, parent) {
+    var oc = Object.prototype.constructor;
+    //判断当前对象是否是Object对象，如果不是对象的构造函数就会调用父类的构造函数
+    var ctor = def.constructor !== oc ? def.constructor : function () {
+         //console.log(parent)
+        if (parent)
+
+            parent.apply(this, arguments);
+    }
+    //创建一个空函数
+    var f = function () {
+    };
+    //如何父函数存在的，将空函数的原型指向父函数的原型
+    if (parent) {
+        f.prototype = parent.prototype;
+    }
+    //然后子类的原型指向空函数的实例，这样就继承了父类的方法
+    ctor.prototype = new f();
+    //然后把子类的构造函数指向子类的构造函数，因为在上一行中把子类的构造函数指向了父类的构造
+    ctor.prototype.constructor = ctor;
+    for (var k in def) {
+        ctor.prototype[k] = def[k];
+    }
+    return ctor;
+}
+
+
+var Animal = define(
+    {
+      constructor:function(name){
+        this.name = name;
+      },
+      getName:function(){
+          return this.name;
+      }
+});
+
+var person = define(
+    {
+        getAge:function(){
+            return this.age;
+        }
+    },Animal);
+
+var a = new Animal('cat');
+console.log(a.getName())
+var p = new person('kobe',22);
+console.log(p.getName())

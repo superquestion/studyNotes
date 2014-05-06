@@ -1,0 +1,62 @@
+appCache 存储的是文件
+localStorage 存储的是数据
+
+在 Apache 服务器上，若要设置适用于清单(.appcache)文件的 MIME 类型，
+可以向根目录或应用的同级目录下的一个 .htaccess 文件中增加 AddType text/cache-manifest .appcache
+
+使用缓存的好处：
+更快的速度：因为文件被存储在本地，所以速度更快
+减轻服务器的负载:浏览器只会下载服务器上发生改变的资源
+
+
+浏览器不会缓存不带眼manifest特性的页面
+
+使用缓存机制后文档的加载顺序：
+
+如果应用缓存存在，浏览器直接从缓存中加载文档和资源
+浏览器检查清单文件列出的资源是否在服务器上被修改
+如果清单文件被更新，浏览器会下载新的文件
+
+
+加载文档和更新应用缓存的过程
+
+1.当浏览器访问一个包含 manifest 特性的文档时，如果应用缓存不存在，浏览器会加载文档，
+然后获取所有在清单文件中列出的文件，生成应用缓存的第一个版本。
+
+2.对该文档的后续访问会使浏览器直接从应用缓存(而不是服务器)中加载文档与其他在清单文件中列出的资源。此外，浏览器还会向 window.applicationCache 
+对象发送一个 checking 事件，在遵循合适的 HTTP 缓存规则前提下，获取清单文件。
+
+3.如果当前缓存的清单副本是最新的，浏览器将向 applicationCache 对象发送一个 noupdate 事件，
+到此，更新过程结束。注意，如果你在服务器修改了任何缓存资源，同时也应该修改清单文件，
+这样浏览器才能知道它需要重新获取资源。
+
+4.如果清单文件已经改变，文件中列出的所有文件—也包括通过调用 applicationCache.add() 方法添加到缓存中的那些文件—会被获取并放到一个临时缓存中，遵循适当的 HTTP 缓存规则。对于每个加入到临时缓存中的文件，浏览器会向 applicationCache 对象发送一个 progress 事件。如果出现任何错误，浏览器会发送一个 error 事件，并暂停更新。
+
+5.一旦所有文件都获取成功，它们会自动移送到真正的离线缓存中，并向  applicationCache 
+对象发送一个 cached事件。鉴于文档早已经被从缓存加载到浏览器中，所以更新后的文档不会重新渲染，直到页面重新加载(可以手动或通过程序).
+
+example.appcache
+
+CACHE　MANIFEST
+# Time: Wed May 6 2014 11:07:07 GMT+0800 (CST)
+index.html
+stylesheet.css
+
+NOTWORK
+/api   #api子目录中资源的请求始终通过网络加载，而不会去访问缓存。
+
+FALLBACK
+
+
+CACHE　MANIFEST 必须放在第一行
+
+#Time  是一个时间戳，用于缓存文件的更新，每次文件更新时需要更新一次
+
+
+NOTWORK
+缓存清单文件的 NETWORK 段落指定了 web 应用需要在线访问的资源。
+
+
+通过在 web 服务器上设置 expires header 来使 *.appcache 文件立即过期是个好主意。这避免了将清单文件缓存的风险。
+例如，在 Apache 中，你可以指定下面的配置项：
+ExpiresByType text/cache-manifest "access plus 0 seconds"

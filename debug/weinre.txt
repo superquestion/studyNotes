@@ -1,0 +1,19 @@
+1. 安装nodejs
+2. npm install -g cnpm --registry=http://r.cnpmjs.org
+3.cnpm install -g  weinre
+4.weinre ?
+启动 weinre
+ weinre --httpPort 8080 --boundHost -all-
+
+ 手机端 的加载 <script src="/target/target-script.js"></script>
+ 服务器根地址：C:\Program Files (x86)\nodejs\node_modules\weinre\web\demo
+
+ 手机访问 xxx/demo/test.html
+ 浏览器 范围  http://localhost:8080/client/
+
+
+ eg:http://localhost:8080/client/ -------pc
+    http://localhost:8080/demo/weinre-demo.html  -----phone
+
+
+ <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, maximum-scale=1.0, minimal-ui" />
