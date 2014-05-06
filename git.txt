@@ -90,6 +90,8 @@ git commit -m "注释"
 
 git add 命令 可以用git commit -a 代替
 
+git rm test.txt 删除test.txt文件
+
 创建一个叫做 feature_x 的分支，并切换到该分支
 git checkout -b feature_x 
 
