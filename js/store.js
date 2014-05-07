@@ -25,4 +25,8 @@
     	}
     	return null;
 	 }
+	 /*example
+	 setCacheResult('1',+~(-new Date()/36e5),{});
+	 getCacheResult('1',+~(-new Date()/36e5));
+	 */
 }).call(this);
