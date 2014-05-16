@@ -143,3 +143,49 @@ $ git rebase --abort
 终止
 
 git grep 
+
+
+git 的棵树
+    工作目录
+     
+    缓存区   缓存区，临时保存你的改动
+
+    head    最后一次提交的结果
+
+git pull  ------> 更新代码到最新
+
+git status -----> 可以看到你工作分支上的最新修改
+
+git add file -----> 添加你即要将提交的
+
+git rm -r --cached .  撤销前一次所有添加到本地的缓存
+
+git add .  当前目录的所有
+
+git commit -m "xxx"   把代码添加到缓存区去
+
+git add * 添加所有
+
+git add '*.txt'   添加所有txt 文件
+
+git log   ----> commit 记录
+
+
+git remote -v   显示对应的克隆地址
+
+git remote add 要添加一个新的远程仓库 如：git remote add origin https://github.com/try-git/try_git.git
+
+
+
+$ git fetch [remote-name] 把远程更新数据拉到本地，但是不会合并
+
+
+ git push -u origin master 把代码提交到仓库的主分支上
+
+ git pull origin master   从主分支上把最新数据跟新下来(本地没有的)并合并
+
+git diff HEAD 和最后一次提交的分歧
+
+git diff –cached                    查看已经暂存起来的文件和上次提交的版本之间的差异
+
+git checkout -- <file>：撤销工作目录中对 <file> 文件的修改
