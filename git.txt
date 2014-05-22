@@ -189,3 +189,7 @@ git diff HEAD 和最后一次提交的分歧
 git diff –cached                    查看已经暂存起来的文件和上次提交的版本之间的差异
 
 git checkout -- <file>：撤销工作目录中对 <file> 文件的修改
+
+git pull --a  killed by singal
+
+git pull --all  提交所有
