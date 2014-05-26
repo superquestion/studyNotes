@@ -1,0 +1,109 @@
+<html>
+<head>
+	<meta charset="utf-8">
+<title>drag</title>
+<style>
+	#box {
+position: absolute;
+left: 100px;
+top: 100px;
+padding: 5px;
+background: #f0f3f9;
+}
+#main {
+border: 1px solid #a0b3d6;
+background: white;
+}
+#bar {
+line-height: 24px;
+background: #beceeb;
+border-bottom: 1px solid #a0b3d6;
+padding-left: 5px;
+cursor: move;
+}
+#content {
+width: 420px;
+height: 250px;
+padding: 10px 5px;
+}
+
+</style>
+
+</head>
+<body>
+     <div id="box">
+	<div id="main">
+    	<div id="bar">拖拽</div>
+        <div id="content">
+        	
+        </div>
+    </div>
+</div>
+</body>
+<script type="text/javascript">
+
+
+
+var getCss = function(o,key){
+	return o.currentStyle? o.currentStyle[key] : document.defaultView.getComputedStyle(o,false)[key]; 	
+};
+function drag(box,bar){
+     this.element = document.getElementById(box);
+     this.bar = document.getElementById(bar);
+     this.params = {
+		left: 0,
+		top: 0,
+		currentX: 0,
+		currentY: 0,
+		flag: false
+	};
+	this.move();
+}
+
+drag.prototype.move = function(){
+
+	if(getCss(this.element, "left") !== "auto"){
+		this.params.left = getCss(this.element, "left");
+	}
+	if(getCss(this.element, "top") !== "auto"){
+		this.params.top = getCss(this.element, "top");
+	}
+	
+	var self = this;
+	this.bar.onmousedown = function(event){
+		self.params.flag = true;
+		if(!event){
+			event = window.event;
+			
+			bar.onselectstart = function(){
+				return false;
+			}  
+		}
+		var e = event;
+		self.params.currentX = e.clientX;
+		self.params.currentY = e.clientY;
+	};
+	document.onmouseup = function(){
+		self.params.flag = false;	
+		if(getCss(self.element, "left") !== "auto"){
+			self.params.left = getCss(self.element, "left");
+		}
+		if(getCss(self.element, "top") !== "auto"){
+			self.params.top = getCss(self.element, "top");
+		}
+	};
+	document.onmousemove = function(event){
+		var e = event ? event: window.event;
+		if(self.params.flag){
+			var nowX = e.clientX, nowY = e.clientY;
+			var disX = nowX - self.params.currentX;
+			var  disY = nowY - self.params.currentY;
+			self.element.style.left = parseInt(self.params.left) + disX + "px";
+			self.element.style.top = parseInt(self.params.top) + disY + "px";
+		}
+	}	
+};
+ new drag('box','bar')
+
+</script>
+<html>
