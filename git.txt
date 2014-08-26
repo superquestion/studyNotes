@@ -19,8 +19,11 @@ git branch -d feature_x
 
 合并
 1.先切换到要合并的分支
-2.git merge xx
-
+2.git merge xx   git merge origin master
+                  git rebase origin master
+                  
+查看远程地址
+    git remote -v
 
 
 快捷设置
