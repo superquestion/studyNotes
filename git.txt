@@ -196,3 +196,5 @@ git checkout -- <file>：撤销工作目录中对 <file> 文件的修改
 git pull --a  killed by singal
 
 git pull --all  提交所有
+
+删除tag   git push origin --delete  baranchname | tagname
