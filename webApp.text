@@ -1,0 +1,22 @@
+/* fixed闪屏 */
+.ui-page {  
+    backface-visibility: hidden;  
+    -webkit-backface-visibility: hidden; /* Chrome and Safari */ 
+    -moz-backface-visibility: hidden; /* Firefox */ 
+}
+==============================================================================================
+
+jquerymobile的机制只会把需要显示的page加载到dom里面，当离开这个page时，会自动把这个page的dom清除掉，
+假如你想要保留这个page在dom里，以后再次显示，需要加上 data-dom-cache="true" 一属性
+
+
+==============================================================================================
+.webkitTouchCallout  禁止原生弹出菜单
+在IOS浏览器里面，假如用户长按a标签，都会出现默认的弹出菜单事件
+
+body {  -webkit-touch-callout: none; }
+
+
+==============================================================================================
+format-detection[telephone=no] 是否自动把电话号码转为链接
+<meta name="format-detection" content="telephone=no">

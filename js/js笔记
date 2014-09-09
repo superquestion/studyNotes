@@ -455,3 +455,12 @@ function getXY(el){
    }
 
 
+unction getXY(event){
+   var e = event || window.event
+   var x = 0, y =0;
+   var scrollTop = document.body.scrollTop || document.documentElement.scrollTop;
+   var scrollLeft = document.body.scrollLeft || document.documentElement.scrollLeft;
+   x = e.pageX || e.clientX + scrollTop - document.body.clientTop,;
+   y = e.pageY || e.clientY + scrollLeft -document.body.clientLeft,;
+   return {'x':x,"y":y}
+}

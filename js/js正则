@@ -35,3 +35,188 @@ Regex.match(str) 返回匹配字符串
  var html = "<p>test</p>";
  var text = html.replace(/<(?:.|\s)*?>/g, "");
  alert(text)  //test
+
+元字符
+
+
+([{\^$|)? * + .
+
+字符       正则     描述
+\t  	   /\t      制表符
+\n         /\n
+\r         /\r      回车
+
+字符
+/ruby/.test("rudy")  //true
+/[abc]/.test("a")   //true
+
+不在范围内
+/[^abc]/.test("a")  //false
+/[^abc]/.test("kk") //true
+
+.   除了回车换行之外的字符
+\d  [0-9]
+|D  [^0-9]
+\s  [\t\n\x0b\f\r]  空白字符
+\w  [a-zA-Z_0-9] 字符
+
+? 出现一次
+* 零或者多次
++  一次或多次
+{n}  0或者n
+{n,m} 	至少出现n次但不超过m次
+{n,}  至少n
+
+/[\u4e00-\u9fa5]/  ----->中文
+
+
+贪婪量词：
+就像成语中说的巴蛇吞象那样，一口吞下整个字符串，发现吞不下（匹配不了），
+再从后面一点点吐出来（去掉最后一个字符，再看这时这个整个字符串是否匹配，
+不断这样重复直到长度为零）
+
+隋性量词，在简单量词后加问号。由于太懒了，先吃了前面第一个字符，如果不饱再捏起多添加一个（发现不匹配，就读下第二个，与最初的组成一个有两个字符串的字符串再尝
+试匹配，如果再不匹配，再吃一个组成拥有三个字符的字符串……）。
+其工作方式与贪婪量词相反]
+var re1 = /.*bbb/g;//贪婪
+var re2 = /.*?bbb/g;//惰性
+
+alert(re1.test("abbbaabbbaaabbbb1234")+"");//true
+alert(re1.exec("abbbaabbbaaabbbb1234")+"");//null
+alert("abbbaabbbaaabbbb1234".match(re1)+"");//abbbaabbbaaabbbb
+
+alert(re2.test("abbbaabbbaaabbbb1234")+"");//true
+alert(re2.exec("abbbaabbbaaabbbb1234")+"");//aabbb
+alert("abbbaabbbaaabbbb1234".match(re2)+"");//abbb,aabbb,aaabbb
+
+
+[] ----表示选择范围
+{} -----表示重复次数
+()  -----表示分组
+'18616813528'.replace(/(\d{4})\d{4}(\d{3})/,'$1****$2')  //"1861****528"
+
+var color = "#990000";
+color.match(/#(\d+)/);
+//["#990000", "990000"]
+
+color.replace(/#(\d+)/,'$1')
+//"990000"
+
+非捕获性分组 (?:)
+
+var color = "#990000";
+/#(?:\d+)/.test(color);
+console.log(RegExp.$1);//""
+
+/<(?:.|\s)*?>/g  ----> 去掉html表情，获得innerHtml
+
+(?=exp)  匹配exp之前的位置
+(?!exp)  匹配后面不是exp的位置
+
+var str1 = "bedroom";
+        var str2 = "bedding";
+        var reBed = /(bed(?=room))///在我们捕获bed这个字符串时，抢先去看接下来的字符串是不是room
+        alert(reBed.test(str1));//true
+        alert(RegExp.$1)//bed
+        alert(RegExp.$2 === "")//true
+        alert(reBed.test(str2))//false
+        var str1 = "bedroom";
+        var str2 = "bedding";
+        var reBed = /(bed(?!room))/  //要来它后面不能是room
+        alert(reBed.test(str1))//false
+        alert(reBed.test(str2))//true
+
+移除hr以外的所有标签  /<(?!hr)(?:.|\s)*?>/ig,""
+
+^  开头
+$ 结尾
+\b  单词边界
+
+首字母大写
+
+String.prototype.firstUp = function(){
+	return this.replace(/^\w/,function(s){
+			return s.toUpperCase();
+	})
+}
+
+var str = "12w-eefd&efrew";
+        alert(str.match(/\b\w+\b/g))//12w,eefd,efrew
+
+
+匹配hi "hi his hi".match(/\bhi\b/gi)
+
+
+要找的是hi后面不远处跟着一个Lucy，你应该用\bhi\b.*\bLucy\b。
+
+
+.*    连在一起就意味着任意数量的不包含换行的字符
+
+
+换行符就是'\n',ASCII编码为10(十六进制0x0A)的字符。
+
+
+/.+\.js$|.+\.css$/  匹配js文件
+
+匹配图片地址 /(src=['"]?([^'"]*)['"]?)/ig
+
+js 去掉两边的空格
+  "      hi       ".replace(/^\s*|\s*$/gi,"")  //hi
+
+
+  .?!_  在元组中通常被当做字符处理
+
+  ^$  表示空行
+
+  colou?r  表示此处容许u出现，但是u的出现不是匹配成功的必要条件
+
+  /^[01]([0-9])|(2)[0-3]$/ -------> 验证时间
+
+(new RegExp("(?:\\#|&)" + key + "=(.*?)(?=&|$)")) || ['', ''])
+
+(new RegExp("(?:\\?|&)" + key + "=(.*?)(?=&|$)")) || ['', ''])
+
+
+ms+   此时的量词+  针对的是s 但是如果加上(ms)+  这样就是针对一个元组
+
+
+正则表达式：
+/[0-9]+/ 和 /^[0-9]+$/的区别：
+/[0-9]+/ 只要字符串中有数字出现就可以，如rrxx9993oooll
+/^[0-9]+$/ 表示必须是全部是数字
+
+正负数小数：/^[-+]?[0-9]+(\.[0-9]*)?$/
+ ^ $  ----> 确保全部是数字
+[-+]? ----> [- +]表示 可以有出现 - + ，“？”表示可以有也可以没有
+[0-9]+ ---->[0-9]数字可以出现 , “+” 表示可以使一次或者多次
+\.  -------->是转义 表示小数点
+* ---------> 可以出现多次
+()? -------> 表示这个元组可以有也可以没有
+
+正则中可以用$1 来获得匹配的第一元组，第二就是$2 以此类推
+如：匹配一个温度，如果是华氏 就转摄氏 ，是摄氏就转华氏
+var input;
+if(input.match(/^([-+]?[0-9]+)([CF])$/)){
+    var num =RegExp.$1;
+    var type = RegExp.$2;
+    if(type === "C"){
+    //TODO 
+    }else{
+	//TODO
+     }
+}
+上面这个地方没有捕获小数
+/^([-+]?[0-9]+(\.[0-9]*))([CF])$/ 这样可以匹配小数了，但是多了一个分组
+原来的type 对应$2 现在变成了$3
+?:  可以实现一个非捕获性分组，如：/^([-+]?[0-9]+(?:\.[0-9]*))([CF])$/  
+只需这样(?:) 在挂号里面添加 ?: 这样type 对应就还是$2了
+
+前瞻：
+(?=exp) 正向前瞻
+(?!exp) 负向前瞻
+向前瞻用来检查接下来的出现的是不是某个特定的字符集。
+而负向前瞻则是检查接下来的不应该出现的特定字符串集
+
+将字符串11100000  转成 11，100，000
+/(?=(?:\d{3})+$)/
+使用了一个非捕获性分组 找到了插入“，”的地方
