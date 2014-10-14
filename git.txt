@@ -28,14 +28,23 @@ git branch -d feature_x
 
 快捷设置
 C:\Users\Administrator  .gitconfig
+[user]
+	email = pan.yang@ttpod.com
+	name = pan.yang
 [alias]
     ci = commit -s
     lg = log --graph --pretty=format:'%Cred%h%Creset -%d%C(white) %s %C(yellow)(%cr) %C(white)%an' --abbrev-commit --date=relative -10
     br = branch
     st = status
     co = checkout
-    go = "! bash -c \" git pull origin && git add . && git status && if [ \\\"$*\\\" == \\\"\\\" ]; then git commit -a; else git commit -am \\\"$*\\\"; fi && git push origin HEAD;\"" 
-    release = "! bash -c \" if [ \\\"$1\\\" == \\\"\\\" -o \\\"$2\\\" == \\\"\\\" ]; then echo \\\"git release <branch> <version> [<message>]\\\"; exit; fi;  git.exe pull -v --progress "origin"; git add .; git status; if [ \\\"$3\\\" == \\\"\\\" ]; then git commit -a; else git commit -am \\\"$3\\\"; fi; git checkout $1; git merge develop; git push --all; git tag -m \\\"$3\\\" $2 && git push --tags; git checkout develop; \"" 
+    go = "! bash -c \" git add --all && git status && if [ \\\"$1\\\" == \\\"\\\" ]; then git commit -a; else git commit -am \\\"$1\\\"; fi  && git pull origin && git push origin HEAD; if [ \\\"$2\\\" != \\\"\\\" ]; then git tag -am \\\"$1\\\" $2 && git push --tags; fi\""
+    release = "! bash -c \" if [ \\\"$1\\\" == \\\"\\\" -o \\\"$2\\\" == \\\"\\\" ]; then echo \\\"git release <branch> <version> [<message>]\\\"; exit; fi;  git add --all; git status; if [ \\\"$3\\\" == \\\"\\\" ]; then git commit -a; else git commit -am \\\"$3\\\"; fi; git pull -v --progress "origin"; git checkout $1; git merge develop; git push --all; git tag -am \\\"$3\\\" $2 && git push --tags; git checkout develop; \""
+    rsync = "! bash -c \"git tag -l | xargs git tag -d; git fetch --all --prune --force\""
+
+[core]
+    autocrlf = true
+[gui]
+    encoding = utf-8
 
 
 1.在项目根目录下建立 .gitignore 文件
