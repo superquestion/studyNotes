@@ -1,0 +1,216 @@
+{"code": 1, "count": 3, "data": {
+    "id": "53997771e4b04a147cd48fe9",
+    "name": "什么测试",
+    "status": 3,
+    "type": 0,
+    "eb_type": 0,
+    "query": [
+        {
+            "index": 1,
+            "detail_id": "5399778ce4b04a147cd48fea",
+            "query": "刘德华",
+            "evaobject": [
+                {
+                    "id": "5360a68492340be7ce90d2df",
+                    "name": "天天动听",
+                    "url": "http://so.ard.iyyin.com/v2/songs/search.do?size=10&page=1&q=:keyword",
+                    "type": 1
+                },
+                {
+                    "id": "537435389234623301e28045",
+                    "name": "qq音乐",
+                    "url": "http://s.plcloud.music.qq.com/fcgi-bin/smartbox.fcg?o_utf8=1&utf8=1&key=:keyword&g_tk=1268979336&hostUin=0&format=jsonp&inCharset=GB2312&outCharset=utf-8&notice=0&platform=yqq&jsonpCallback=MusicJsonCallBack&needNewCode=0",
+                    "type": 1
+                }
+            ],
+            "evaluation_user": "feng.zhang@ttpod.com",
+            "evaluaion_user_id": "5387ea50923400c6023b7ee6",
+            "dcgScore": {
+                "{\"id\":\"5360a68492340be7ce90d2df\",\"name\":\"天天动听\",\"url\":\"http://so.ard.iyyin.com/v2/songs/search.do?size=10&page=1&q=:keyword\",\"type\":1}": [
+                    {
+                        "index": 1,
+                        "score": 3,
+                        "description": ""
+                    },
+                    {
+                        "index": 2,
+                        "score": 2,
+                        "description": ""
+                    },
+                    {
+                        "index": 3,
+                        "score": 2,
+                        "description": ""
+                    },
+                    {
+                        "index": 4,
+                        "score": 2,
+                        "description": ""
+                    },
+                    {
+                        "index": 5,
+                        "score": 1,
+                        "description": ""
+                    }
+                ],
+                "{\"id\":\"537435389234623301e28045\",\"name\":\"qq音乐\",\"url\":\"http://s.plcloud.music.qq.com/fcgi-bin/smartbox.fcg?o_utf8=1&utf8=1&key=:keyword&g_tk=1268979336&hostUin=0&format=jsonp&inCharset=GB2312&outCharset=utf-8&notice=0&platform=yqq&jsonpCallback=MusicJsonCallBack&needNewCode=0\",\"type\":1}": [
+                    {
+                        "index": 1,
+                        "score": 0,
+                        "description": ""
+                    },
+                    {
+                        "index": 2,
+                        "score": 1,
+                        "description": ""
+                    },
+                    {
+                        "index": 3,
+                        "score": 1,
+                        "description": ""
+                    },
+                    {
+                        "index": 4,
+                        "score": 1,
+                        "description": ""
+                    },
+                    {
+                        "index": 5,
+                        "score": 1,
+                        "description": ""
+                    }
+                ]
+            },
+            "sbsScore": null
+        },
+        {
+            "index": 2,
+            "detail_id": "5399778ce4b04a147cd48feb",
+            "query": "张学友",
+            "evaobject": [
+                {
+                    "id": "5360a68492340be7ce90d2df",
+                    "name": "天天动听",
+                    "url": "http://so.ard.iyyin.com/v2/songs/search.do?size=10&page=1&q=:keyword",
+                    "type": 1
+                },
+                {
+                    "id": "537435389234623301e28045",
+                    "name": "qq音乐",
+                    "url": "http://s.plcloud.music.qq.com/fcgi-bin/smartbox.fcg?o_utf8=1&utf8=1&key=:keyword&g_tk=1268979336&hostUin=0&format=jsonp&inCharset=GB2312&outCharset=utf-8&notice=0&platform=yqq&jsonpCallback=MusicJsonCallBack&needNewCode=0",
+                    "type": 1
+                }
+            ],
+            "evaluation_user": "feng.zhang@ttpod.com",
+            "evaluaion_user_id": "5387ea50923400c6023b7ee6",
+            "dcgScore": {
+                "{\"id\":\"5360a68492340be7ce90d2df\",\"name\":\"天天动听\",\"url\":\"http://so.ard.iyyin.com/v2/songs/search.do?size=10&page=1&q=:keyword\",\"type\":1}": [
+                    {
+                        "index": 1,
+                        "score": 2,
+                        "description": ""
+                    },
+                    {
+                        "index": 2,
+                        "score": 1,
+                        "description": ""
+                    },
+                    {
+                        "index": 3,
+                        "score": 3,
+                        "description": ""
+                    },
+                    {
+                        "index": 4,
+                        "score": 1,
+                        "description": ""
+                    },
+                    {
+                        "index": 5,
+                        "score": 2,
+                        "description": ""
+                    }
+                ],
+                "{\"id\":\"537435389234623301e28045\",\"name\":\"qq音乐\",\"url\":\"http://s.plcloud.music.qq.com/fcgi-bin/smartbox.fcg?o_utf8=1&utf8=1&key=:keyword&g_tk=1268979336&hostUin=0&format=jsonp&inCharset=GB2312&outCharset=utf-8&notice=0&platform=yqq&jsonpCallback=MusicJsonCallBack&needNewCode=0\",\"type\":1}": [
+                    {
+                        "index": 1,
+                        "score": 3,
+                        "description": ""
+                    },
+                    {
+                        "index": 2,
+                        "score": 4,
+                        "description": ""
+                    },
+                    {
+                        "index": 3,
+                        "score": 4,
+                        "description": ""
+                    },
+                    {
+                        "index": 4,
+                        "score": 3,
+                        "description": ""
+                    },
+                    {
+                        "index": 5,
+                        "score": 0,
+                        "description": ""
+                    }
+                ]
+            },
+            "sbsScore": null
+        },
+        {
+            "index": 3,
+            "detail_id": "5399778ce4b04a147cd48fec",
+            "query": "啊丫丫",
+            "evaobject": [
+                {
+                    "id": "5360a68492340be7ce90d2df",
+                    "name": "天天动听",
+                    "url": "http://so.ard.iyyin.com/v2/songs/search.do?size=10&page=1&q=:keyword",
+                    "type": 1
+                },
+                {
+                    "id": "537435389234623301e28045",
+                    "name": "qq音乐",
+                    "url": "http://s.plcloud.music.qq.com/fcgi-bin/smartbox.fcg?o_utf8=1&utf8=1&key=:keyword&g_tk=1268979336&hostUin=0&format=jsonp&inCharset=GB2312&outCharset=utf-8&notice=0&platform=yqq&jsonpCallback=MusicJsonCallBack&needNewCode=0",
+                    "type": 1
+                }
+            ],
+            "evaluation_user": "feng.zhang@ttpod.com",
+            "evaluaion_user_id": "5387ea50923400c6023b7ee6",
+            "dcgScore": {
+                "{\"id\":\"5360a68492340be7ce90d2df\",\"name\":\"天天动听\",\"url\":\"http://so.ard.iyyin.com/v2/songs/search.do?size=10&page=1&q=:keyword\",\"type\":1}": [
+                    {
+                        "index": 1,
+                        "score": 3,
+                        "description": ""
+                    },
+                    {
+                        "index": 2,
+                        "score": 2,
+                        "description": ""
+                    },
+                    {
+                        "index": 3,
+                        "score": 1,
+                        "description": ""
+                    },
+                    {
+                        "index": 4,
+                        "score": 0,
+                        "description": ""
+                    },
+                    {
+                        "index": 5,
+                        "score": 0,
+                        "description": ""
+                    }
+                ]
+            },
+            "sbsScore": null
+        }
+    ]
+}, "all_page": 1}
