@@ -7,7 +7,7 @@ function Slide(options){
     this.center = Math.ceil(this.len / 2) -1;
     this.init();
 }
-_Slide = Slide.prototype;
+var _Slide = Slide.prototype;
 
 _Slide.init = function(){
     var len = this.len;
