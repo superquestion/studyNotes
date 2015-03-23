@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+    <title>mSlider</title>
+    <style>
+        html, body {
+            height: 100%;
+        }
+        body {
+            line-height: 1.5;
+            font-size: 12px;
+            font-family: "hiragino sans gb", Arial;
+            color: #55676e;
+            background: #f6f2fa;
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+        }
+        *{
+            padding: 0;
+            margin: 0;
+        }
+        #mSlider{
+            position: relative;
+            height: 100%;
+            overflow: hidden;
+        }
+        .mSlider-item{
+             width: 100%;
+             height: 100%;
+        }
+        .item-1{
+            background: #009900;
+        }
+        .item-2{
+            background: #ffff00;
+        }
+        .item-3{
+            background: #0000cc;
+        }
+        .item-4{
+            background: #0066FF;
+        }
+        .mSlider-item {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            -webkit-transition: -webkit-transform .3s ease-out;
+            -webkit-transform:translate3d(0,100%,0);
+        }
+        .item-1{
+            -webkit-transform:translate3d(0,0,0)
+        }
+    </style>
+</head>
+<body>
+    <div id="mSlider">
+        <section id="current" class="mSlider-item item-1"></section>
+        <section id="next" class="mSlider-item item-2"></section>
+        <section id="section3" class="mSlider-item item-3"></section>
+        <section id="section4" class="mSlider-item item-4" ></section>
+    </div>
+
+</body>
+<script>
+   function $(o){
+    return document.querySelector(o)
+}
+function $$(o){
+    return document.querySelectorAll(o)
+}
+function getNext(o){
+    var  list = [];
+    if(o.nextElementSibling == null){
+        return null;
+    }
+    while (o = o.nextElementSibling) {
+            list.push(o);
+    }
+    return list;
+}
+function getPrev(o){
+    var  list = [];
+    if(o.previousElementSibling == null){
+        return null;
+    }
+    while (o = o.previousElementSibling) {
+            list.push(o);
+    }
+    return list;
+}
+var mSlider = function (opts) {
+    this.$dom =  $("#" + opts.id);
+    if (this.$dom.length < 1) {
+        throw new Error('parent node is empty');
+    }
+    this.opts = opts;
+    this.init();
+};
+_mSlider = mSlider.prototype;
+
+_mSlider.init = function(){
+    var opts = this.opts;
+    this.wrap = this.$dom;
+    this.slideItem = this.wrap.children;
+    this.len = this.slideItem.length;
+    // 默认开始索引
+    this.slideIndex = this.slideIndex || 0;
+    this.width = this.wrap.clientWidth;
+    this.height = this.wrap.clientHeight;
+    this.touchInitPos = 0;//手指初始位置
+    this.startPos = 0;//移动开始的位置
+    this.totalDist = 0,//移动的总距离
+    this.deltaX1 = 0;//每次移动的正负
+    this.deltaX2 = 0;//每次移动的正负
+    this.currentIndex = 0;
+
+    // slider 切换完成后
+    this.onslidechange = opts.onslidechange;
+    this.bindHandler();
+}
+_mSlider.bindHandler = function() {
+    var item1 = this.slideItem[0]
+        item1.className = item1.className + " active";
+    var self = this;
+    var isMoving = false;
+    var hasTouch = !!(('ontouchstart' in window) || window.DocumentTouch && document instanceof window.DocumentTouch);
+    var startEvt = hasTouch ? 'touchstart' : 'mousedown';
+    var moveEvt = hasTouch ? 'touchmove' : 'mousemove';
+    var endEvt = hasTouch ? 'touchend' : 'mouseup';
+    var  _touchstart = function(e){
+
+        //if(e.touches.length !== 1){return;}//如果大于1个手指，则不处理
+        isMoving = true;
+        this.touchInitPos = hasTouch ? e.touches[0].pageY : e.pageY; // 每次move的触点位置
+        this.deltaX1 = this.touchInitPos;//touchstart的时候的原始位置
+
+        this.startPos = 0;
+        this.startPosPrev = -self.height;
+        this.startPosNext = self.height;
+        this.hasPrev = !!$('#prev');
+        this.hasNext = !!$('#next');
+    }
+    var  _touchmove = function(e){
+        //if(e.touches.length !== 1){return;}
+        if(!isMoving){
+            return false;
+        }
+        var currentX = hasTouch ? e.touches[0].pageY : e.pageY;
+        this.deltaX2 = currentX - this.deltaX1;//记录当次移动的偏移量
+        this.totalDist = this.startPos + currentX - this.touchInitPos;
+        var pos= '0,'+this.totalDist+'px';
+        $('#current').style.WebkitTransform='translate3d(' +  pos+ ', 0)';
+        this.startPos = this.totalDist;
+
+        //处理上一张和下一张
+        if (this.totalDist<0) {//露出下一张
+            if (this.hasNext) {
+                this.dist = this.startPosNext + currentX - this.touchInitPos;
+                var pos2= '0,'+this.dist+'px';
+                $('#next').style.WebkitTransform='translate3d(' +  pos2+ ', 0)';
+                this.startPosNext = this.dist;
+            }
+        }else {//露出上一张
+            if (this.hasPrev) {
+                this.dist = this.startPosPrev + currentX - this.touchInitPos;
+                var pos2= '0,'+this.dist+'px';
+                $('#prev').style.WebkitTransform='translate3d(' +  pos2+ ', 0)';
+                this.startPosPrev = this.dist;
+            }
+        }
+
+        this.touchInitPos = currentX;
+    }
+    var _touchend = function(e){
+        isMoving = false ;
+        if(this.deltaX2<-15){
+           self.next();
+        }else if(this.deltaX2 > 15){
+           self.prev();
+        }else{
+            itemReset();
+        }
+        this.deltaX2 = 0;
+    }
+    $('body').addEventListener(startEvt,function (e) {
+        _touchstart(e);
+    },false);
+    $('body').addEventListener(moveEvt,function (e) {
+       _touchmove(e);
+    },false);
+    $('body').addEventListener(endEvt,function (e) {
+        _touchend(e);
+    },false);
+}
+
+_mSlider.next = function(){
+    var allItems = this.len;
+    if (this.currentIndex < allItems-1) {
+        this.currentIndex++;
+    }else {
+        itemReset();
+        return false;
+    }
+
+    var prevIndex = this.currentIndex===0 ? allItems-1 : this.currentIndex-1;
+    var $prevAll = getPrev($('#current'));
+    if($prevAll) $prevAll[0].id = " ";
+    var $current = $('#current'), $next = $("#next");
+    $current.style.WebkitTransform='translate3d(0,-'+this.height+'px,0)';
+    $current.id='prev';
+    $next.style.WebkitTransform='translate3d(0,0,0)';
+    $next.id='current';
+
+    var $nextAll = getNext($('#current'));
+    if($nextAll) $nextAll[0].id = "next",
+        $nextAll[0].style.WebkitTransform='translate3d(0,'+this.height+'px,0)' ;
+    var $active = $('.active');
+    if ($active) {
+        $active.className=$active.className.replace('active','');
+    }
+    var $dom = $('#current')
+    $dom.className +=' active';
+    this.onslidechange && this.onslidechange(this.currentIndex, $dom);
+}
+_mSlider.prev = function(){
+    var allItems = this.len;
+    if (this.currentIndex > 0) {
+
+        this.currentIndex--;
+    } else {
+        itemReset();
+        return false;
+    }
+
+    var nextIndex = this.currentIndex+1 > allItems-1 ? 0 : this.currentIndex+1;
+    var $nextAll = getNext($('#current')),
+        $current = $("#current");
+    if($nextAll) $nextAll[0].id = " ";
+    $current.style.WebkitTransform='translate3d(0,'+this.height+'px,0)';
+    $current.id='next';
+    $('#prev').style.WebkitTransform='translate3d(0,0,0)';
+    $('#prev').id='current';
+
+    var next = getNext($('#current'));
+    var prev = getPrev($('#current'));
+    if(prev) prev[0].id = "prev";
+    if(next) next[0].id = "next";
+    var $active = $('.active');
+    if ($active) {
+        $active.className=$active.className.replace('active','');
+    }
+    var $dom = $('#current')
+    $dom.className +=' active';
+    this.onslidechange && this.onslidechange(this.currentIndex, $dom);
+
+}
+function itemReset() {
+    var $current =  $('#current'),
+        $prev =  $('#prev'),
+        $next = $('#next'),
+        $active = $(".active");
+    $current.style.WebkitTransform='translate3d(0,0, 0)';
+    if ($prev) {
+        $prev.style.WebkitTransform='translate3d(0,-'+this.height+'px, 0)';
+    }
+    if ($next) {
+        $next.style.WebkitTransform='translate3d(0,'+this.height+'px, 0)';
+    }
+    if ($active) {
+        $active.className=$('.active').className.replace('active','');
+    }
+    $current.className +=' active';
+}
+
+new mSlider({
+    id: "mSlider",
+    onslidechange:function(index, el){
+        console.log(index);
+        console.log(el);
+    }
+}) 
+    
+    </script>
+</html>
