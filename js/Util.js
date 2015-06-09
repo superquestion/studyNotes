@@ -20,7 +20,7 @@
     		return function(){
     			context = this;
     			args = arguments;
-    			var now = new date.getTime();
+    			var now = new Date().getTime();
     			if(!previous) previous = now;
     			//判断前一个定时器的函数是否执行完毕
     			var wait = delay - (now - previous);
