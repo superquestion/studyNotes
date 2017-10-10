@@ -31,7 +31,7 @@
     			  result = fn.call(context,args)
     			  context = args = null;
 
-    			}esle if(!timeOut){
+    			} else if(!timeOut){
     				timeOut = setTimeout(later, delay);
     			}
     			return result;
